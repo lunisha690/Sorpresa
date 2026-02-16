@@ -1,85 +1,193 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feliz Cumpleaños Fabri ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Fabri</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(ellipse at bottom, #0a192f 0%, #02060c 100%);
+            color: #f0f0f0;
+            font-family: 'Georgia', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: pointer; /* Indica que se puede hacer clic */
+        }
 
-<style>
-body{
-    margin:0;
-    background:#0d47a1;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    flex-direction:column;
-    color:white;
-    font-family:Arial, sans-serif;
-    text-align:center;
-}
+        /* Estrellas fugaces */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: move 4s linear infinite;
+        }
+        @keyframes move {
+            from { transform: translate(0,0) rotate(45deg); width: 2px; height: 2px; }
+            to { transform: translate(600px, 600px) rotate(45deg); width: 0px; height: 0px; opacity: 0; }
+        }
 
-.tree{
-    position:relative;
-    width:200px;
-    height:200px;
-}
+        .container {
+            width: 90%;
+            max-width: 550px;
+            text-align: center;
+            z-index: 2;
+            padding: 40px 0;
+        }
 
-.heart{
-    position:absolute;
-    width:20px;
-    height:20px;
-    background:red;
-    transform:rotate(45deg);
-}
+        h1 { font-size: 2.2rem; color: #fff; margin-bottom: 20px; letter-spacing: 3px; }
 
-.heart::before,
-.heart::after{
-    content:'';
-    position:absolute;
-    width:20px;
-    height:20px;
-    background:red;
-    border-radius:50%;
-}
+        .poem {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 30px;
+            white-space: pre-line;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
 
-.heart::before{
-    top:-10px;
-    left:0;
-}
+        /* Árbol de Corazones */
+        canvas {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.3));
+        }
 
-.heart::after{
-    left:-10px;
-    top:0;
-}
+        #contador {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
 
-.trunk{
-    width:20px;
-    height:100px;
-    background:#5d4037;
-    margin:0 auto;
-    margin-top:-20px;
-}
-</style>
+        .hint {
+            position: fixed;
+            top: 10px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+        }
+    </style>
 </head>
+<body onclick="playMusic()">
 
-<body>
+    <div class="hint">(Toca cualquier parte para escuchar la música)</div>
 
-<div class="tree">
-    <!-- corazones formando árbol -->
-    <div class="heart" style="top:0; left:90px;"></div>
-    <div class="heart" style="top:20px; left:60px;"></div>
-    <div class="heart" style="top:20px; left:120px;"></div>
-    <div class="heart" style="top:40px; left:40px;"></div>
-    <div class="heart" style="top:40px; left:80px;"></div>
-    <div class="heart" style="top:40px; left:140px;"></div>
-    <div class="heart" style="top:60px; left:60px;"></div>
-    <div class="heart" style="top:60px; left:120px;"></div>
-</div>
+    <audio id="bg-music" loop>
+        <source src="https://googleusercontent.com/file_content/1" type="audio/mpeg">
+    </audio>
 
-<div class="trunk"></div>
+    <div class="stars-container" id="stars"></div>
 
-<h1>Feliz Cumpleaños Fabri ❤️</h1>
+    <div class="container">
+        <h1>Para Fabri</h1>
+        
+        <div class="poem">
+            Desde que apareciste,
+            todo tiene un matiz distinto.
 
+            Me encanta verte sonreír,
+            me encanta el color de tus ojos,
+            y la manera en que sin darte cuenta
+            logras desarmarme.
+
+            Llegaste como una coincidencia,
+            pero te quedaste como algo que siento profundo.
+
+            Despiertas en mí
+            cada emoción bonita,
+            cada impulso sincero,
+            cada latido que no sabía que llevaba tu nombre.
+
+            Nunca permitas que nadie te ame
+            menos de lo que realmente mereces,
+            porque yo…
+            yo sería capaz de darlo todo
+            por verte feliz,
+            por verte en paz,
+            por verte brillar. ❤️
+        </div>
+
+        <canvas id="treeCanvas" width="400" height="400"></canvas>
+
+        <div id="contador">Calculando nuestro tiempo...</div>
+    </div>
+
+    <script>
+        // --- MÚSICA AL CLIC ---
+        function playMusic() {
+            const audio = document.getElementById('bg-music');
+            audio.play();
+            document.querySelector('.hint').style.display = 'none';
+        }
+
+        // --- CONTADOR (10 de Julio de 2025) ---
+        const startDate = new Date('2025-07-10T00:00:00');
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - startDate;
+
+            if (diff < 0) {
+                document.getElementById('contador').innerHTML = "Faltan pocos días...";
+                return;
+            }
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const m = Math.floor((diff / (1000 * 60)) % 60);
+            const s = Math.floor((diff / 1000) % 60);
+            document.getElementById('contador').innerHTML = `Mi amor por ti comenzó hace...<br><b>${d} días, ${h}h ${m}m ${s}s</b>`;
+        }
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        // --- DIBUJO DEL ÁRBOL ---
+        const canvas = document.getElementById('treeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function drawTree(startX, startY, len, angle, branchWidth) {
+            ctx.beginPath();
+            ctx.save();
+            ctx.strokeStyle = "#3d2b1f"; 
+            ctx.lineWidth = branchWidth;
+            ctx.translate(startX, startY);
+            ctx.rotate(angle * Math.PI / 180);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, -len);
+            ctx.stroke();
+
+            if (len < 12) {
+                ctx.fillStyle = Math.random() > 0.5 ? "#ff4d6d" : "#ff8fa3";
+                ctx.font = "14px Arial";
+                ctx.fillText("❤️", -5, -len);
+                ctx.restore();
+                return;
+            }
+
+            drawTree(0, -len, len * 0.78, angle - Math.random() * 25, branchWidth * 0.7);
+            drawTree(0, -len, len * 0.78, angle + Math.random() * 25, branchWidth * 0.7);
+            ctx.restore();
+        }
+        drawTree(200, 380, 75, 0, 7);
+
+        // --- ESTRELLAS FUGACES ---
+        const starsContainer = document.getElementById('stars');
+        for(let i=0; i<10; i++) {
+            let s = document.createElement('div');
+            s.className = 'star';
+            s.style.top = Math.random() * 60 + "vh";
+            s.style.left = Math.random() * 100 + "vw";
+            s.style.animationDelay = Math.random() * 8 + "s";
+            document.body.appendChild(s);
+        }
+    </script>
 </body>
 </html>
