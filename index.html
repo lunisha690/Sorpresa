@@ -4,27 +4,82 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Feliz Cumpleaños Fabri ❤️</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+    margin:0;
+    background:#0d47a1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    flex-direction:column;
+    color:white;
+    font-family:Arial, sans-serif;
+    text-align:center;
+}
+
+.tree{
+    position:relative;
+    width:200px;
+    height:200px;
+}
+
+.heart{
+    position:absolute;
+    width:20px;
+    height:20px;
+    background:red;
+    transform:rotate(45deg);
+}
+
+.heart::before,
+.heart::after{
+    content:'';
+    position:absolute;
+    width:20px;
+    height:20px;
+    background:red;
+    border-radius:50%;
+}
+
+.heart::before{
+    top:-10px;
+    left:0;
+}
+
+.heart::after{
+    left:-10px;
+    top:0;
+}
+
+.trunk{
+    width:20px;
+    height:100px;
+    background:#5d4037;
+    margin:0 auto;
+    margin-top:-20px;
+}
+</style>
 </head>
+
 <body>
 
-<div class="stars"></div>
-
-<div class="container">
-
-  <div class="tree">
-    <div class="trunk"></div>
-    <div class="hearts" id="hearts"></div>
-  </div>
-
-  <div class="card">
-    <h1>Feliz Cumpleaños, Fabri ❤️</h1>
-    <p id="typewriter"></p>
-    <button id="musicBtn">Escuchar nuestra canción 🎵</button>
-  </div>
-
+<div class="tree">
+    <!-- corazones formando árbol -->
+    <div class="heart" style="top:0; left:90px;"></div>
+    <div class="heart" style="top:20px; left:60px;"></div>
+    <div class="heart" style="top:20px; left:120px;"></div>
+    <div class="heart" style="top:40px; left:40px;"></div>
+    <div class="heart" style="top:40px; left:80px;"></div>
+    <div class="heart" style="top:40px; left:140px;"></div>
+    <div class="heart" style="top:60px; left:60px;"></div>
+    <div class="heart" style="top:60px; left:120px;"></div>
 </div>
 
-<script src="script.js"></script>
+<div class="trunk"></div>
+
+<h1>Feliz Cumpleaños Fabri ❤️</h1>
+
 </body>
 </html>
